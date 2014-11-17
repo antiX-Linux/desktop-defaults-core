@@ -1,0 +1,69 @@
+#!/bin/bash
+
+#
+# We call ourselves with nohup to restart X-windows with a delay between
+# shutting down the display manager and starting it again.
+
+# GETTEXT_KEYWORD="gt"
+# GETTEXT_KEYWORD="pfgt"
+
+# How long we pause between stopping and starting display manager
+OPT_PAUSE=5
+
+source /usr/local/lib/antiX/antiX-dm.sh
+source /usr/local/lib/antiX/antiX-common.sh "$@"
+
+INIT_DIR=/etc/init.d
+
+TITLE="$(gt "Restart X Windows")"
+
+blurb1="$(gt "Restart X Windows")"
+
+EXTRA_USAGE="
+[b]$ME specific options:[/]
+    -p|--pause    <seconds>   $(gt "Pause between stopping and starting.")
+    --restart     <service>   $(gt "DO NOT USE.")
+"
+
+OPTIONS="
+    p,pause|o|PAUSE
+    restart|o|RESTART
+"
+
+add_options  "$OPTIONS"
+read_options "$@"
+extra_args   0
+
+need_root
+start_logging
+
+if [ "$SET_RESTART" ]; then
+    /etc/init.d/$OPT_RESTART stop
+    sleep $OPT_PAUSE
+    /etc/init.d/$OPT_RESTART start
+    exit
+fi
+
+get_default_display_manager || info_box -c "$TITLE"       \
+    ""                                                    \
+    "$(gt "The default display manager was not found.")"  \
+    ""                                                    \
+    "$(gt "Wiil search for any running display manager.")"
+
+get_display_manager || error_box            \
+    "$(gt "No display manager was found.")" \
+    "$(gt "Cannot restart X.")"
+
+noisy_yes_no_box "$TITLE" ""                                                                  \
+    ""                                                                                        \
+    "$(pfgt "Found display manager: %s" "[b]$DDM_SERVICE[/]")"                                \
+    ""                                                                                        \
+    "$(gt "Do you want to restart X-windows now?  ")"                                         \
+    ""                                                                                        \
+    "$(pfgt "(There will be a %s second pause before X-windows starts) " "[n]$OPT_PAUSE[/]")" \
+    ""                                                                                        \
+    || exit
+
+vmsg "Restarting X-Windows"
+exec nohup $0 "$@" --restart $DDM_SERVICE &>> $LOG_FILE
+

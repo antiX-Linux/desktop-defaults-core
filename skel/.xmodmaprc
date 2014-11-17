@@ -1,0 +1,15 @@
+!----------------------------------------------------------------------
+! File .xmopmaprc
+!
+! List of instructions for xmodmap program to modify keyboard and
+! pointer device inside of X-windows.  Called from .xinitrc.
+!----------------------------------------------------------------------
+
+pointer = 1 2 3 4 5
+
+! Reverse buttons on mouse
+! pointer = 3 2 1
+
+! Convert Caps-Lock to an extra Control key
+! clear lock
+! keysym Caps_Lock = Control_L

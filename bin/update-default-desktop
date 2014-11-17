@@ -1,0 +1,186 @@
+#!/bin/bash
+
+# GETTEXT_KEYWORD="gt"
+# GETTEXT_KEYWORD="pfgt"
+# GETTEXT_KEYWORD="vpfgt"
+# GETTEXT_KEYWORD="error_box_pf"
+
+OPT_PAUSE=5
+
+source /usr/local/lib/antiX/antiX-get-param.sh
+#source /usr/local/lib/antiX/antiX-desktop.sh
+#source /usr/local/lib/antiX/antiX-dm.sh
+
+# Must be after the above to get colors right
+source /usr/local/lib/antiX/antiX-common.sh     "$@"
+
+SLIM_CONF=/etc/slim.conf
+SKEL_FILE=/etc/skel/.xinitrc
+
+make_xinitrc=/usr/share/antiX/lib/make-xinitrc
+
+TITLE="$(gt "Change Default Window Manager")"
+
+blurb1="$(pfgt "Change the default desktop in %s, %s and %s then offer to restart X-windows." \
+    "[f]$SLIM_CONF[/]" "[f]~/.xinitrc[/]" "[f]$SKEL_FILE[/]")"
+
+blurb2="$(gt "Includes all known installed Windows Managers as options in both files.")"
+
+BLURB="$(echo -e "\n$blurb1  \n\n$blurb2" | fold -s -w 74 | sed 's/^/    /')"
+
+EXTRA_USAGE="
+[b]$ME specific options:[/]
+    -d|--default  <deskcode>  $(gt "New default desktop.")
+    -f|--force                $(gt "Overwrite customized .xinitrc files without asking.")
+    -p|--pause    <seconds>   $(gt "Pause between stopping and starting X.")
+    -t|--test                 $(gt "Print out changes without touching files.")
+"
+
+OPTIONS="
+    d,default|o|DEFAULT
+    f,force||FORCE
+    p,pause|o|PAUSE
+    t,test||TEST
+"
+
+add_options  "$OPTIONS"
+read_options "$@"
+extra_args   0
+
+test -x $make_xinitrc || error_box \
+    "$(gt "Need the $make_xinitrc program to continue")"
+
+#need_root
+if [ $UID -ne 0 ]; then
+    if [ "$RESTARTED" ]; then
+        error_box "$(gt_ac "Already restarted.")"
+
+    elif [ -z "$SET_GUI" ]; then
+        vmsg "Restarting with sudo ..."
+        exec sudo RESTARTED=true "$0" "${CMDLINE_ARGS[@]}"
+
+    elif  which gksu &>/dev/null; then
+        vmsg "Restarting with gksu -k ..."
+        RESTARTED=true exec gksu -k -- "$0" "${CMDLINE_ARGS[@]}"
+    else
+        error_box "$(gt_ac "Please run this script as root.")"
+    fi
+fi
+
+start_logging
+
+#printenv | grep -v COLOR
+
+if [ "$SUDO_USER" ]; then
+    user=$SUDO_USER
+elif [ "$USER" = root ]; then
+    error_box "$(gt "This program needs to be invoked as: \"gksu -k $0\"")"
+else
+    user=$USER
+fi
+
+home=$(getent passwd $user | cut -d: -f6)
+
+[ -d "$home" ] || error_box_pf \
+    "%s directory: %s does not exist" "[b]$user home directory[/b]" "[f]$home[/]"
+
+user_xinitrc=$home/.xinitrc
+
+test -r $user_xinitrc \
+    && current_default=$(sed -rn 's/^DEFAULT_DESKTOP="(.*)"/\1/p' $user_xinitrc)
+
+: ${current_default:=UNKNOWN}
+
+rox_desktop_list=$($make_xinitrc --list)
+
+if [ -z "$OPT_DEFAULT" ]; then
+    menu=$(echo "$rox_desktop_list" | sed 's/,/!/g')
+    combo_box  "Desktop:" "$menu" \
+        "Select Default" "$TITLE" \
+        ""                        \
+        "Current default: $current_default" \
+        ""
+    OPT_DEFAULT=$UI_RESULT
+fi
+
+case ",$rox_desktop_list," in
+    *,$OPT_DEFAULT,*) ;;
+                   *) error_box                               \
+    ""                                                        \
+    "$(pfgt "Invalid deskcode: %s" "[b]$OPT_DEFAULT[/]")"     \
+    ""                                                        \
+    "$(pfgt "Valid choices: %s" "$rox_desktop_list")"
+    ;;
+esac
+
+was_autogen() { 
+    local file="$1"
+    test -e "$file" || return 0
+    grep -qi "^#.*created.*make-xinitrc" "$file"
+    return $?
+}
+
+$make_xinitrc "$OPT_DEFAULT" >/dev/null || \
+    error_box "There was a fatal error while running $make_xinitrc"
+
+if [ "$SET_TEST" ]; then
+
+    $make_xinitrc "$OPT_DEFAULT"
+
+else
+    if [ -z "$SET_FORCE" ] && ! was_autogen $user_xinitrc; then
+        yes_no_box "$TITLE" ""                                                  \
+            "$(pfgt "The file %s has been customized. " "[f]$user_xinitrc[/]")" \
+            ""                                                                  \
+            "$(gt "Do you want to over-write it?")"                             \
+            || NO_OVERWRITE=true
+    fi
+
+    if [ -z "$NO_OVERWRITE" ]; then
+
+        vpfgt "Writing %s\n" "[f]$user_xinitrc[/]"
+        [ -e $user_xinitrc -a ! -e $user_xinitrc.bak ] && mv $user_xinitrc $user_xinitrc.bak
+        $make_xinitrc "$OPT_DEFAULT" > $user_xinitrc
+        chown $user $user_xinitrc
+        WROTE="$WROTE [f]$user_xinitrc[/]"
+    fi
+fi
+
+vpfgt "Writing %s\n" "[f]$SKEL_FILE[/]"
+
+$make_xinitrc "$OPT_DEFAULT" > $SKEL_FILE
+WROTE="$WROTE [f]$SKEL_FILE[/]"
+
+line="sessions     $rox_desktop_list"
+
+if [ "$SET_TEST" ]; then
+    info_box "$TITLE" ""                                       \
+        "$(gt "Here is the new sessions line for slim.conf:")" \
+        ""                                                     \
+        "$line"
+    exit
+fi
+
+vpf "Updating [f]%s[/]\n" $SLIM_CONF
+
+sed -i "s=^sessions .*=$line=" $SLIM_CONF
+WROTE="[f]$SLIM_CONF[/] $WROTE"
+
+no_yes_box "$TITLE" ""                                                                        \
+    "$(pfgt "Wrote: %s" "$WROTE")"                                                            \
+    ""                                                                                        \
+    "$(pfgt "Set default window manager to: %s" "[p]$OPT_DEFAULT[/]")"                        \
+    ""                                                                                        \
+    "$(gt "Do you want to restart X-windows now?  ")"                                         \
+    ""                                                                                        \
+    "$(pfgt "(There will be a %s second pause before X-windows starts) " "[n]$OPT_PAUSE[/]")" \
+    ""                                                                                        \
+    || exit
+
+vmsg "Restarting X-Windows"
+
+#exec nohup $0 "$@" --restart-x &>> $LOG_FILE
+
+exec restart-X --quiet --pause "$OPT_PAUSE"
+
+

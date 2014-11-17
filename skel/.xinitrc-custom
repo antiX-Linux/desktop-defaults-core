@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#----------------------------------------------------------------------
+# File .xinitrc-custom
+#
+# This file is called from ~/.xinitrc and is run every time X starts.
+# Put custom commands in here that you want to have run when X starts.
+# Called from .xinitrc.
+#----------------------------------------------------------------------
+
+# Uncomment to automatically mount removable drives upon plugging in
+# which devmon &>/dev/null && which udevil &>/dev/null && devmon &

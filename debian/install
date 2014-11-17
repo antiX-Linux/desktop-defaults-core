@@ -1,0 +1,7 @@
+bin/*                          /usr/local/bin
+locale/*	               /usr/share/locale
+rules.d/*                      /etc/udev/rules.d
+skel/.[a-zA-Z]*                /etc/skel
+X11/*                          /etc/X11
+changelog.gz                   /usr/share/doc/desktop-defaults-core-antix 
+copyright                      /usr/share/doc/desktop-defaults-core-antix 
