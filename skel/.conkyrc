@@ -236,13 +236,13 @@ ${color2}$alignr${cpugraph cpu0 40,195 5599cc 5599cc }
 # ${top name 3}${alignr}${color3}${top cpu 3}${color}%
 ${color}Disk:${alignr}${color3}${diskio}
 ${color2}${alignr}${diskiograph 40,195 5599cc 5599cc }
-${if_up eth0}${color}eth0 up: $alignr${color3} ${upspeed}
+${if_up eth0}${color}eth0 up: $alignr${color3} ${upspeed eth0}
 ${color2}$alignr${upspeedgraph   eth0 40,195 5599cc 5599cc 1000 -l}
-${color}eth0 down: $alignr${color3} ${downspeed}
+${color}eth0 down: $alignr${color3} ${downspeed eth0}
 ${color2}$alignr${downspeedgraph eth0 40,195 5599cc 5599cc 1000 -l}${endif}
-${if_up wlan0}${color}wlan0 up: $alignr${color3} ${upspeed}
+${if_up wlan0}${color}wlan0 up: $alignr${color3} ${upspeed wlan0}
 ${color2}$alignr${upspeedgraph   wlan0 40,195 5599cc 5599cc 1000 -l}
-${color}wlan0 down: $alignr${color3} ${downspeed}
+${color}wlan0 down: $alignr${color3} ${downspeed wlan0}
 ${color2}$alignr${downspeedgraph wlan0 40,195 5599cc 5599cc 1000 -l}${endif}
 ${color}${alignr}${color3}Used / Total
 ${color}RAM:${alignr}$mem ${color3} /${color} $memmax
