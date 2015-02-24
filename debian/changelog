@@ -1,3 +1,17 @@
+desktop-defaults-core-antix (0.4.9) unstable; urgency=low
+ 
+  * Removed from skel .htoprc, .xmodmaprc, .xsession-errors, .Xdefaults
+
+ -- anticapitalista <antiX@operamail.com>  Tue, 17 Feb 2015 17:05:00 +0200
+
+
+desktop-defaults-core-antix (0.4.8) unstable; urgency=low
+ 
+  * Added --update to 90-fstab-automount.rules
+
+ -- anticapitalista <antiX@operamail.com>  Wed, 07 Jan 2015 14:41:00 +0200
+
+
 desktop-defaults-core-antix (0.4.7) unstable; urgency=low
  
   * Minor edits to conkyrc.
