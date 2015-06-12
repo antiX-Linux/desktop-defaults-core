@@ -48,7 +48,7 @@ double_buffer yes
 
 # Minimum size of text area
 minimum_size 5 5
-maximum_width 200
+maximum_width 180
 
 # Draw shades?
 draw_shades no
@@ -218,32 +218,27 @@ uppercase no
 # stuff after 'TEXT' will be formatted on screen
 
 TEXT
-${color3}${alignc}${execi 1000 sed -n -r 's/^([a-zA-Z]+-[0-9.]+).*/\1/p' /etc/antix-version 2>/dev/null}
-${color8}$alignc${font DejaVu Sans:size=12}${time %I:%M}${color black} . $font
+${color3}${alignc}antiX
+${color8}$alignc${font DejaVu Sans:size=12}${time %I:%M}   $font
 ${color}${alignc}${time %a %d %b}
-#${color}${alignc}Desktop: ${color}${exec disp=${DISPLAY#:}; disp=${disp%.[0-9]}; cat $HOME/.desktop-session/desktop-code.$disp 2>/dev/null}
 ${color}${alignc}${exec disp=${DISPLAY#:}; disp=${disp%.[0-9]}; cat $HOME/.desktop-session/desktop-code.$disp 2>/dev/null}
-#${color}${alignc}${execi 1000 test -n "$DESKTOP_CODE" && echo "Desktop: "}${execi 1000 echo $DESKTOP_CODE}
-#${color}${alignc}${execi 1000 echo $DESKTOP_CODE}
 ${color3}${alignc}${execi 60 xdpyinfo | sed -n -r "s/^\s*dimensions:.*\s([0-9]+x[0-9]+).*/\1/p"}
-${color}${alignc}$sysname $kernel
+${color}${alignc}$kernel
 ${color}${alignc}Uptime: $uptime
 
 ${color}CPU:${alignr}${color3}${cpu}${color}%
-${color2}$alignr${cpugraph cpu0 40,195 5599cc 5599cc }
-# ${top name 1}${alignr}${color3}${top cpu 1}${color}%
-# ${top name 2}${alignr}${color3}${top cpu 2}${color}%
-# ${top name 3}${alignr}${color3}${top cpu 3}${color}%
+${color}Freq:${color3}${alignr}${freq}
+${color2}$alignr${cpugraph cpu0 40, 170 5599cc 5599cc }
 ${color}Disk:${alignr}${color3}${diskio}
-${color2}${alignr}${diskiograph 40,195 5599cc 5599cc }
+${color2}${alignr}${diskiograph 40,170 5599cc 5599cc }
 ${if_up eth0}${color}eth0 up: $alignr${color3} ${upspeed eth0}
-${color2}$alignr${upspeedgraph   eth0 40,195 5599cc 5599cc 1000 -l}
+${color2}$alignr${upspeedgraph   eth0 40,170 5599cc 5599cc 1000 -l}
 ${color}eth0 down: $alignr${color3} ${downspeed eth0}
-${color2}$alignr${downspeedgraph eth0 40,195 5599cc 5599cc 1000 -l}${endif}
+${color2}$alignr${downspeedgraph eth0 40,170  5599cc 5599cc 1000 -l}${endif}
 ${if_up wlan0}${color}wlan0 up: $alignr${color3} ${upspeed wlan0}
-${color2}$alignr${upspeedgraph   wlan0 40,195 5599cc 5599cc 1000 -l}
+${color2}$alignr${upspeedgraph   wlan0 40,170 5599cc 5599cc 1000 -l}
 ${color}wlan0 down: $alignr${color3} ${downspeed wlan0}
-${color2}$alignr${downspeedgraph wlan0 40,195 5599cc 5599cc 1000 -l}${endif}
+${color2}$alignr${downspeedgraph wlan0 40,170 5599cc 5599cc 1000 -l}${endif}
 ${color}${alignr}${color3}Used / Total
 ${color}RAM:${alignr}$mem ${color3} /${color} $memmax
 ${color}Swap:${alignr}$swap ${color3} /${color} $swapmax

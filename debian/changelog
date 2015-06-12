@@ -1,3 +1,11 @@
+desktop-defaults-core-antix (0.5.0) unstable; urgency=low
+ 
+  * New conkyrc defaults
+  * Include conky-colors script
+
+ -- anticapitalista <antiX@operamail.com>  Wed, 22 Feb 2015 19:46:00 +0200
+
+
 desktop-defaults-core-antix (0.4.9) unstable; urgency=low
  
   * Removed from skel .htoprc, .xmodmaprc, .xsession-errors, .Xdefaults
