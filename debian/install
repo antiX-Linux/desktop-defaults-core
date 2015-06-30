@@ -1,5 +1,4 @@
 bin/*                          /usr/local/bin
-locale/*	               /usr/share/locale
 rules.d/*                      /etc/udev/rules.d
 skel/.[a-zA-Z]*                /etc/skel
 X11/*                          /etc/X11
