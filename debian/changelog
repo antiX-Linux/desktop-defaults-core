@@ -1,9 +1,16 @@
+desktop-defaults-core-antix (0.5.2) unstable; urgency=low
+ 
+  * Removed urxvt colors 
+
+ -- anticapitalista <antiX@operamail.com>  Fri, 04 Mar 2015 12:29:00 +0200
+
+
 desktop-defaults-core-antix (0.5.1) unstable; urgency=low
  
   * Minor edits to .conkyrc
   * Removed old .xinitrc and update desktop files
 
- -- anticapitalista <antiX@operamail.com>  Fri, 26 jun 2015 13:21:00 +0200
+ -- anticapitalista <antiX@operamail.com>  Fri, 26 Jun 2015 13:21:00 +0200
 
 
 desktop-defaults-core-antix (0.5.0) unstable; urgency=low
