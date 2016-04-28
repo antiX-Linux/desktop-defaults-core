@@ -3,3 +3,4 @@ rules.d/*               etc/udev/rules.d
 skel/.[a-zA-Z]*         etc/skel
 X11/*                   etc/X11
 autologin 		usr/sbin
+root/.[a-zA-Z]*         root

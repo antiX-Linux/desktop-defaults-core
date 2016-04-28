@@ -1,3 +1,23 @@
+desktop-defaults-core-antix (0.5.5) unstable; urgency=medium
+
+  * Newer conkyrc file
+  * Added htoprc to root folder
+
+ -- anticapitalista <antix@operamail.com>  Wed, 27 Apr 2016 15:05:50 +0300
+
+desktop-defaults-core-antix (0.5.4) unstable; urgency=medium
+
+  * Removed xcalc settings in .Xresources
+  * Changed URxvt*.font: pixelsize=14 to size=11 in .Xresources
+
+ -- anticapitalista <antix@operamail.com>  Tue, 26 Apr 2016 14:50:04 +0300
+
+desktop-defaults-core-antix (0.5.3) unstable; urgency=medium
+
+  * Updated conky-colors 
+
+ -- anticapitalista <antix@operamail.com>  Tue, 19 Apr 2016 17:11:09 +0300
+
 desktop-defaults-core-antix (0.5.2) unstable; urgency=low
  
   * Removed urxvt colors 

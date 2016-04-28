@@ -26,7 +26,9 @@ light_grey_THEME="
 COLOR_1=808080
 COLOR_2=808080
 COLOR_3=white
+COLOR_4=white
 COLOR_8=white
+COLOR_9=white
 GRAPH_C=fffffe"
 
 light_red_THEME="
@@ -101,6 +103,16 @@ COLOR_8=a000a0
 COLOR_9=000000
 GRAPH_C=900090"
 
+black_THEME="
+COLOR_1=000000
+COLOR_2=000000
+COLOR_3=000000
+COLOR_4=000000
+COLOR_8=000000
+COLOR_9=000000
+GRAPH_C=000090"
+
+
 SED_ARG=-i
 SUBST_SUFFIX=
 QUIET=
@@ -126,6 +138,7 @@ Options:
     -f --file=<file>   Makes change to <file> instead of .conkyrc
     -h --help          Show this help
     -p --pretend       Show changes but don't do anything
+    -r --reload        Reload conky (usually this is not needed)
     -q --quiet         Only print error messages
 Usage
 
@@ -156,6 +169,7 @@ main() {
                -help|h) usage                           ;;
             -pretend|p) SUBST_SUFFIX=p ; SED_ARG=-n     ;;
               -quiet|q) QUIET=true                      ;;
+             -reload|r) RELOAD=true                     ;;
                      *) fatal "Unknown argument: -$arg" ;;
         esac
     done
@@ -207,6 +221,13 @@ main() {
         -e "s/^(color9 ).*/\1$COLOR_9/$SUBST_SUFFIX" \
         -e "/^[$]\{.*\{\w+graph / s/ [0-9a-fA-F]{6}\>/ $GRAPH_C/g$SUBST_SUFFIX" \
         "$FILE"
+
+    if [ -z "$PRETEND" -a -n "$RELOAD" ]; then
+        killall conky
+        conky
+        sleep 0.5
+        wmctrl -r "Conky ($(hostname))" -b add,below
+    fi
 
     qsay "Set theme to: $cmd_theme"
 }
