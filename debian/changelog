@@ -1,3 +1,16 @@
+desktop-defaults-core-antix (0.5.7) unstable; urgency=medium
+
+  * New conkyrc
+  * Added various useful conf files to /etc/modprobe 
+
+ -- anticapitalista <antix@operamail.com>  Tue, 10 May 2016 23:18:32 +0300
+
+desktop-defaults-core-antix (0.5.6) unstable; urgency=medium
+
+  * Added eth1 and wlan1 to .conkyrc 
+
+ -- anticapitalista <antix@operamail.com>  Fri, 29 Apr 2016 16:05:04 +0300
+
 desktop-defaults-core-antix (0.5.5) unstable; urgency=medium
 
   * Newer conkyrc file

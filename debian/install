@@ -4,3 +4,6 @@ skel/.[a-zA-Z]*         etc/skel
 X11/*                   etc/X11
 autologin 		usr/sbin
 root/.[a-zA-Z]*         root
+modprobe.d/* 		etc/modprobe.d
+libuser.conf 		etc
+20-thinkpad.conf 	usr/share/X11/xorg.conf.d
