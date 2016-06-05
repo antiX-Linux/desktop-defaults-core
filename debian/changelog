@@ -1,3 +1,22 @@
+desktop-defaults-core-antix (0.5.10) unstable; urgency=medium
+
+  * Add line in conkyrc to report automount status 
+  * Add blank lines at the bottom of .conkyrc
+
+ -- anticapitalista <antix@operamail.com>  Fri, 03 Jun 2016 00:09:26 +0300
+
+desktop-defaults-core-antix (0.5.9) unstable; urgency=medium
+
+  * Bug fixes to fstab-automount.rules and hang-on-shutdown.conf 
+
+ -- anticapitalista <antix@operamail.com>  Thu, 26 May 2016 18:11:03 +0300
+
+desktop-defaults-core-antix (0.5.8) unstable; urgency=medium
+
+  * Allow mmcblk devices to be selected by our udev rule  
+
+ -- anticapitalista <antix@operamail.com>  Sun, 22 May 2016 18:03:16 +0300
+
 desktop-defaults-core-antix (0.5.7) unstable; urgency=medium
 
   * New conkyrc
