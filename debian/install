@@ -7,3 +7,5 @@ root/.[a-zA-Z]*         root
 modprobe.d/* 		etc/modprobe.d
 libuser.conf 		etc
 20-thinkpad.conf 	usr/share/X11/xorg.conf.d
+umountnfs-alternative.sh       etc/init.d
+

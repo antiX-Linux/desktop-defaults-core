@@ -1,3 +1,21 @@
+desktop-defaults-core-antix (0.5.13) unstable; urgency=medium
+
+  * Added umountnfs-alternative.sh
+
+ -- anticapitalista <antix@operamail.com>  Thu, 16 Jun 2016 14:13:46 +0300
+
+desktop-defaults-core-antix (0.5.12) unstable; urgency=medium
+
+  * hang-on-shutdown.conf - uncomment 2 blacklist items 
+
+ -- anticapitalista <antix@operamail.com>  Wed, 15 Jun 2016 13:57:03 +0300
+
+desktop-defaults-core-antix (0.5.11) unstable; urgency=medium
+
+  * Added ~/.condig/xresources.d folder to customise .Xresources 
+
+ -- anticapitalista <antix@operamail.com>  Mon, 13 Jun 2016 19:44:46 +0300
+
 desktop-defaults-core-antix (0.5.10) unstable; urgency=medium
 
   * Add line in conkyrc to report automount status 
