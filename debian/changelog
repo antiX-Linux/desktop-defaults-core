@@ -1,3 +1,9 @@
+desktop-defaults-core-antix (0.5.14) unstable; urgency=medium
+
+  * New lua conkyrc
+
+ -- anticapitalista <antix@operamail.com>  Wed, 01 Mar 2017 21:27:37 +0200
+
 desktop-defaults-core-antix (0.5.13) unstable; urgency=medium
 
   * Added umountnfs-alternative.sh
