@@ -1,3 +1,15 @@
+desktop-defaults-core-antix (0.5.16) untable; urgency=medium
+
+  * Fix faulty conkyrc file
+
+ -- anticapitalista <antix@operamail.com>  Thu, 28 Sep 2017 23:31:19 +0300
+
+desktop-defaults-core-antix (0.5.15) unstable; urgency=medium
+
+  * Set default conkyrc to legacy
+
+ -- anticapitalista <antix@operamail.com>  Sun, 02 Jul 2017 23:52:44 +0300
+
 desktop-defaults-core-antix (0.5.14) unstable; urgency=medium
 
   * New lua conkyrc
