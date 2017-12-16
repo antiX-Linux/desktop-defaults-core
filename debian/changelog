@@ -1,3 +1,10 @@
+desktop-defaults-core-antix (0.5.19) unstable; urgency=medium
+
+  * added keymaps symlinks
+  * added mkfs.btrfs smlink
+
+ -- anticapitalista <antix@operamail.com>  Fri, 24 Nov 2017 17:21:42 +0200
+
 desktop-defaults-core-antix (0.5.18) unstable; urgency=medium
 
   * Put back 80-net-name-slot.rules and include 80-net-setup-link.rules
